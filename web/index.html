@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquaFlow ERP — Intelligent Replenishment System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="dot"></div>
+      AquaFlow ERP
+    </div>
+    <div class="nav-links">
+      <a onclick="scrollTo('overview')" class="active" id="nav-overview">Overview</a>
+      <a onclick="scrollTo('pipeline')" id="nav-pipeline">Pipeline</a>
+      <a onclick="scrollTo('eda')" id="nav-eda">EDA</a>
+      <a onclick="scrollTo('som')" id="nav-som">SOM</a>
+      <a onclick="scrollTo('forecast')" id="nav-forecast">Forecast</a>
+      <a onclick="scrollTo('inventory')" id="nav-inventory">Inventory</a>
+      <a onclick="scrollTo('shap')" id="nav-shap">SHAP</a>
+    </div>
+    <div class="nav-badge">v1.0 OFFICIAL</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="overview" class="wrap">
+  <div class="hero fade-up">
+    <div class="hero-eyebrow">
+      <span>●</span> SOM + ANN + SHAP · Beverage Distribution
+    </div>
+    <h1>Intelligent<br><span>Replenishment</span> Engine</h1>
+    <p class="hero-sub">73,100 daily transactions · 5 stores · 100 SKUs · 2022–2024. Demand forecasting powered by Self-Organizing Maps and Neural Networks.</p>
+    <div class="hero-pills">
+      <div class="pill active">SOM Clustering</div>
+      <div class="pill active">ANN Forecast</div>
+      <div class="pill active">SHAP Explainability</div>
+      <div class="pill">PCA Compression</div>
+      <div class="pill">Safety Stock</div>
+      <div class="pill">Reorder Point</div>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="grid-4 fade-up delay-2">
+    <div class="card">
+      <div class="card-title">Total Records</div>
+      <div class="card-value neon">73,100</div>
+      <div class="card-sub">Daily transactions · 2022–2024</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Daily Demand</div>
+      <div class="card-value neon">136.5</div>
+      <div class="card-sub">Units per SKU · all stores</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Model MAE</div>
+      <div class="card-value" style="color:var(--ok)">68.7</div>
+      <div class="card-sub">units/day on test set</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Model R²</div>
+      <div class="card-value" style="color:var(--ok)">0.42</div>
+      <div class="card-sub">Leakage-free genuine performance</div>
+    </div>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div id="pipeline" class="wrap section">
+  <div class="section-label">01 — Pipeline</div>
+  <div class="section-title">End-to-End ML Process</div>
+  <div class="section-sub">Six sequential stages from raw data to replenishment decision</div>
+
+  <div class="flow-steps" id="flowSteps">
+    <div class="flow-step active" onclick="activateStep(0)">
+      <div class="step-num">01 — DATA</div>
+      <div class="step-name">Load & EDA</div>
+      <div class="step-desc">73,100 records, 15 features, 100 SKUs across 5 stores</div>
+    </div>
+    <div class="flow-step" onclick="activateStep(1)">
+      <div class="step-num">02 — FEAT ENG</div>
+      <div class="step-name">Feature Engineering</div>
+      <div class="step-desc">Lag-1/3/7/14/30, rolling stats, cyclic time encoding</div>
+    </div>
+    <div class="flow-step" onclick="activateStep(2)">
+      <div class="step-num">03 — PCA</div>
+      <div class="step-name">Dimensionality Reduction</div>
+      <div class="step-desc">36 features → 28 PCs retaining 95% variance</div>
+    </div>
+    <div class="flow-step" onclick="activateStep(3)">
+      <div class="step-num">04 — SOM</div>
+      <div class="step-name">Demand Clustering</div>
+      <div class="step-desc">10×10 grid, 100 neurons, 5 demand archetypes</div>
+    </div>
+    <div class="flow-step" onclick="activateStep(4)">
+      <div class="step-num">05 — ANN</div>
+      <div class="step-name">Neural Forecast</div>
+      <div class="step-desc">Keras Tuner search, BatchNorm, Dropout, Adam optimizer</div>
+    </div>
+    <div class="flow-step" onclick="activateStep(5)">
+      <div class="step-num">06 — INVENTORY</div>
+      <div class="step-name">Replenishment</div>
+      <div class="step-desc">Safety stock, reorder point, SKU-level status alert</div>
+    </div>
+  </div>
+
+  <!-- Step detail panel -->
+  <div id="stepDetail" style="margin-top:20px;"></div>
+</div>
+
+<!-- EDA -->
+<div id="eda" class="wrap section">
+  <div class="section-label">02 — Exploratory Analysis</div>
+  <div class="section-title">Dataset Overview</div>
+  <div class="section-sub">Sales patterns across time, region, weather and seasonality</div>
+
+  <div class="grid-2">
+    <!-- Trend chart -->
+    <div class="card">
+      <div class="card-title">Monthly Average Units Sold · 2022–2024</div>
+      <div class="chart-wrap" style="height:240px; margin-top:12px;">
+        <canvas id="trendChart" role="img" aria-label="Monthly average units sold over 2022 to 2024">Monthly demand trend</canvas>
+      </div>
+    </div>
+    <!-- Weather / Season chart -->
+    <div class="card">
+      <div class="card-title">Demand by Weather & Season</div>
+      <div class="chart-wrap" style="height:240px; margin-top:12px;">
+        <canvas id="weatherChart" role="img" aria-label="Average units sold by weather condition and season">Weather and season breakdown</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Regional breakdown -->
+  <div class="card">
+    <div class="card-title">Regional Sales Distribution</div>
+    <div style="display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top:16px;">
+      <div id="regionNorth" class="result-box" style="margin:0; cursor:pointer;">
+        <div style="font-size:11px; font-family:var(--mono); color:var(--text-muted); margin-bottom:6px;">NORTH · S001</div>
+        <div style="font-size:24px; font-weight:700; color:var(--neon)">135.1</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">avg units/day</div>
+        <div style="font-size:11px; color:var(--text-muted);">1,975,750 total</div>
+      </div>
+      <div class="result-box" style="margin:0; cursor:pointer; border-color:rgba(0,255,136,0.3);">
+        <div style="font-size:11px; font-family:var(--mono); color:var(--text-muted); margin-bottom:6px;">SOUTH · S002/S003</div>
+        <div style="font-size:24px; font-weight:700; color:var(--ok)">137.2</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">avg units/day</div>
+        <div style="font-size:11px; color:var(--text-muted);">4,010,411 total</div>
+      </div>
+      <div class="result-box" style="margin:0; cursor:pointer;">
+        <div style="font-size:11px; font-family:var(--mono); color:var(--text-muted); margin-bottom:6px;">WEST · S005</div>
+        <div style="font-size:24px; font-weight:700; color:var(--neon)">137.5</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">avg units/day</div>
+        <div style="font-size:11px; color:var(--text-muted);">2,010,176 total</div>
+      </div>
+      <div class="result-box" style="margin:0; cursor:pointer;">
+        <div style="font-size:11px; font-family:var(--mono); color:var(--text-muted); margin-bottom:6px;">EAST · S004</div>
+        <div style="font-size:24px; font-weight:700; color:var(--neon)">135.4</div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">avg units/day</div>
+        <div style="font-size:11px; color:var(--text-muted);">1,979,245 total</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOM CLUSTERING -->
+<div id="som" class="wrap section">
+  <div class="section-label">03 — SOM Clustering</div>
+  <div class="section-title">Demand Archetype Map</div>
+  <div class="section-sub">10×10 Self-Organizing Map groups 100 SKUs by demand behavior. 5 dominant archetypes identified.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">SOM U-Matrix (Simulated · 10×10 Grid)</div>
+      <div class="chart-wrap" style="height:280px; margin-top:12px;">
+        <canvas id="somCanvas" role="img" aria-label="SOM U-Matrix grid showing demand cluster boundaries"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Demand Archetypes · 5 Clusters</div>
+      <div class="cluster-grid" style="margin-top:16px;" id="clusterGrid"></div>
+      <div id="clusterDetail" style="margin-top:16px; padding:14px; border-radius:var(--r-sm); background:rgba(0,212,255,0.06); border:1px solid var(--glass-border); font-size:13px; display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Metrics after SOM+ANN -->
+  <div class="grid-4">
+    <div class="card">
+      <div class="card-title">RMSE</div>
+      <div class="card-value" style="color:var(--warn); font-size:28px;">87.6</div>
+      <div class="card-sub">units/day on test set</div>
+    </div>
+    <div class="card">
+      <div class="card-title">MAE</div>
+      <div class="card-value" style="color:var(--ok); font-size:28px;">68.7</div>
+      <div class="card-sub">mean absolute error</div>
+    </div>
+    <div class="card">
+      <div class="card-title">R²</div>
+      <div class="card-value" style="color:var(--ok); font-size:28px;">0.42</div>
+      <div class="card-sub">genuine, leakage-free</div>
+    </div>
+    <div class="card">
+      <div class="card-title">MAPE</div>
+      <div class="card-value" style="color:var(--neon); font-size:28px;">18.3%</div>
+      <div class="card-sub">actual &gt; 5 units rows</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORECAST SIMULATOR -->
+<div id="forecast" class="wrap section">
+  <div class="section-label">04 — Forecast Engine</div>
+  <div class="section-title">Demand Forecast Simulator</div>
+  <div class="section-sub">Interactive demo: select product, adjust conditions, get predicted demand</div>
+
+  <div class="sim-wrap">
+    <!-- Controls -->
+    <div class="card sim-controls">
+      <div class="sim-group">
+        <label>Product</label>
+        <select id="simProduct" onchange="updateForecast()">
+          <option value="P063|142.5|0.35">Nuun Sport Hydration Tablets</option>
+          <option value="P008|149.6|0.28">Glaceau SmartWater 600ml</option>
+          <option value="P032|150.1|0.22">A&W Root Beer 330ml</option>
+          <option value="P021|141.3|0.31">Dr Pepper 330ml Can</option>
+          <option value="P015|142.5|0.27">Deer Park Spring Water 1.5L</option>
+          <option value="P017|137.9|0.33">Pepsi Cola 330ml Can</option>
+          <option value="P044|140.7|0.29">C4 Energy Original 473ml</option>
+          <option value="P093|142.1|0.24">Captain Morgan Rum 750ml</option>
+        </select>
+      </div>
+      <div class="sim-group">
+        <label>Store</label>
+        <select id="simStore" onchange="updateForecast()">
+          <option value="S001|135.1">S001 — North Region</option>
+          <option value="S002|136.0">S002 — South Region</option>
+          <option value="S003|138.4">S003 — South Region</option>
+          <option value="S004|135.4">S004 — East Region</option>
+          <option value="S005|137.5">S005 — West Region</option>
+        </select>
+      </div>
+      <div class="sim-group">
+        <label>Weather Condition</label>
+        <select id="simWeather" onchange="updateForecast()">
+          <option value="1.014">☀️ Sunny (Demand +1.4%)</option>
+          <option value="1.002" selected>☁️ Cloudy (Baseline)</option>
+          <option value="0.991">🌧 Rainy (Demand −0.9%)</option>
+          <option value="0.996">❄️ Snowy (Demand −0.4%)</option>
+        </select>
+      </div>
+      <div class="sim-group">
+        <label>Seasonality</label>
+        <select id="simSeason" onchange="updateForecast()">
+          <option value="1.012">🍂 Autumn (+1.2%)</option>
+          <option value="1.000">🌱 Spring (Baseline)</option>
+          <option value="0.997">☀️ Summer (−0.3%)</option>
+          <option value="1.005">❄️ Winter (+0.5%)</option>
+        </select>
+      </div>
+      <div class="sim-group">
+        <label>Discount (%): <span id="discLabel" style="color:var(--neon)">10%</span></label>
+        <div class="range-row">
+          <input type="range" min="0" max="30" value="10" step="5" id="simDiscount" oninput="document.getElementById('discLabel').textContent=this.value+'%'; updateForecast()">
+        </div>
+      </div>
+      <div class="sim-group">
+        <label>Lag-7 Demand (prev week): <span id="lagLabel" style="color:var(--neon)">140</span></label>
+        <div class="range-row">
+          <input type="range" min="50" max="300" value="140" step="5" id="simLag7" oninput="document.getElementById('lagLabel').textContent=this.value; updateForecast()">
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="result-box">
+        <div class="result-row">
+          <span class="result-label">Predicted Demand</span>
+          <span class="result-val" id="simResult">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">95% Confidence Band</span>
+          <span class="result-val" id="simBand">—</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">SOM Cluster</span>
+          <span class="result-val" id="simCluster">—</span>
+        </div>
+        <div class="result-row" style="border-bottom:none;">
+          <span class="result-label">Forecast Status</span>
+          <span id="simStatus">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forecast chart -->
+    <div class="card" style="display:flex; flex-direction:column;">
+      <div class="card-title">Actual vs Predicted · Sep 2023 (Test Set)</div>
+      <div class="chart-wrap" style="flex:1; min-height:340px; margin-top:12px;">
+        <canvas id="forecastChart" role="img" aria-label="Line chart showing actual vs predicted units sold over 30 days in September 2023">Actual vs predicted demand</canvas>
+      </div>
+      <div style="display:flex; gap:20px; margin-top:12px; font-size:12px; color:var(--text-muted);">
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:20px;height:2px;background:#00d4ff;display:inline-block;"></span>Actual</span>
+        <span style="display:flex;align-items:center;gap:6px;"><span style="width:20px;height:2px;background:#ff6b35;border-top:2px dashed #ff6b35;display:inline-block;"></span>Predicted</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INVENTORY -->
+<div id="inventory" class="wrap section">
+  <div class="section-label">05 — Inventory Intelligence</div>
+  <div class="section-title">Safety Stock & Reorder Point</div>
+  <div class="section-sub">Formula: SS = Z × σ × √L · ROP = μ × L + SS · Service level 95%</div>
+
+  <div class="grid-3" style="margin-bottom:24px;">
+    <div class="card">
+      <div class="card-title">Safety Stock</div>
+      <div class="card-value neon" style="font-size:36px;">284</div>
+      <div class="card-sub">units · Z=1.645 · L=7 days</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Reorder Point</div>
+      <div class="card-value" style="color:var(--warn); font-size:36px;">1,240</div>
+      <div class="card-sub">units · μ=136.5 · L=7 days</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Inventory Level</div>
+      <div class="card-value" style="color:var(--text); font-size:36px;">274.5</div>
+      <div class="card-sub">units · all SKUs · test period</div>
+    </div>
+  </div>
+
+  <!-- SKU table -->
+  <div class="card" style="padding:0; overflow:hidden;">
+    <div style="padding:16px 20px; border-bottom:1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:13px; font-weight:600;">Top SKUs by Volume — Inventory Status</span>
+      <div style="display:flex; gap:12px; font-size:11px;">
+        <span><span class="badge badge-ok">OK</span> &gt; ROP</span>
+        <span><span class="badge badge-warn">REORDER</span> ≤ ROP</span>
+        <span><span class="badge badge-danger">CRITICAL</span> &lt; 0.7×ROP</span>
+      </div>
+    </div>
+    <div class="table-wrap" style="border:none; border-radius:0;">
+      <table id="skuTable"></table>
+    </div>
+  </div>
+
+  <!-- Inventory gauge chart -->
+  <div style="margin-top:24px;">
+    <div class="card">
+      <div class="card-title">Inventory Level vs Reorder Point · Top 12 SKUs</div>
+      <div class="chart-wrap" style="height:320px; margin-top:12px;">
+        <canvas id="invChart" role="img" aria-label="Horizontal bar chart showing inventory level vs reorder point for top SKUs">Inventory vs reorder point</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHAP -->
+<div id="shap" class="wrap section">
+  <div class="section-label">06 — SHAP Explainability</div>
+  <div class="section-title">Feature Impact on Demand Predictions</div>
+  <div class="section-sub">SHapley Additive exPlanations — mean absolute SHAP value per principal component</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:16px;">Feature Importance Ranking</div>
+      <div id="shapBars"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">SHAP Beeswarm (Illustrative)</div>
+      <div class="chart-wrap" style="height:280px; margin-top:12px;">
+        <canvas id="shapScatter" role="img" aria-label="Scatter chart illustrating SHAP value distribution per feature">SHAP beeswarm plot</canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>AquaFlow ERP</span> · Intelligent Replenishment System v1.0 · SOM + ANN + SHAP · Dataset: 73,100 records · 2022–2024
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
