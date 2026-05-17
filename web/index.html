@@ -3,131 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaFlow ERP — Warehouse Intelligence System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <title>AquaFlow ERP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- SIDEBAR -->
+<!-- ── SIDEBAR ─────────────────────────────────────────────────── -->
 <aside id="sidebar">
   <div class="logo">
-    <div class="logo-mark">
-      <span class="logo-dot"></span>
-      <span class="logo-dot"></span>
-      <span class="logo-dot"></span>
+    <div class="logo-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
     </div>
     <div>
       <div class="logo-name">AquaFlow</div>
-      <div class="logo-sub">ERP v1.0</div>
+      <div class="logo-tag">ERP v1.0 · Official</div>
     </div>
   </div>
 
   <nav class="sidenav">
-    <div class="nav-section-label">OVERVIEW</div>
+    <div class="nav-group-label">Overview</div>
     <a class="nav-item active" data-page="dashboard" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       Dashboard
     </a>
 
-    <div class="nav-section-label">WAREHOUSE</div>
+    <div class="nav-group-label">Warehouse</div>
     <a class="nav-item" data-page="inventory" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
       Inventory
-      <span class="nav-badge danger" id="badgeCritical">—</span>
+      <span class="nav-chip danger" id="badgeCritical">–</span>
     </a>
     <a class="nav-item" data-page="orders" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      Replenishment Orders
-      <span class="nav-badge warn" id="badgeReorder">—</span>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Replenishment
+      <span class="nav-chip warn" id="badgeReorder">–</span>
     </a>
 
-    <div class="nav-section-label">ANALYTICS</div>
+    <div class="nav-group-label">Analytics</div>
     <a class="nav-item" data-page="forecast" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       Demand Forecast
     </a>
     <a class="nav-item" data-page="stores" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Store Performance
     </a>
 
-    <div class="nav-section-label">AI MODEL</div>
+    <div class="nav-group-label">AI Model</div>
     <a class="nav-item" data-page="pipeline" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/><path d="M22 12a10 10 0 0 1-20 0"/></svg>
       ML Pipeline
     </a>
     <a class="nav-item" data-page="shap" onclick="nav(this)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      SHAP Explainability
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      SHAP Explain
     </a>
   </nav>
 
-  <div class="sidebar-footer">
-    <div class="status-dot ok"></div>
-    <span>Model online · R²=0.42</span>
+  <div class="sb-footer">
+    <div class="pulse-dot"></div>
+    <span>Model online · R²&nbsp;0.42</span>
   </div>
 </aside>
 
-<!-- MAIN CONTENT -->
+<!-- ── MAIN ─────────────────────────────────────────────────────── -->
 <main id="main">
 
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="topbar-left">
-      <button class="menu-btn" onclick="toggleSidebar()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <button class="menu-btn" onclick="toggleSidebar()" title="Toggle sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
       <span id="pageTitle" class="page-title">Dashboard</span>
     </div>
     <div class="topbar-right">
-      <span class="topbar-meta">Dataset: 73,100 records · 100 SKUs · 5 Stores · 2022–2024</span>
+      <span class="topbar-meta">73,100 records · 100 SKUs · 5 Stores · 2022–2024</span>
       <div class="topbar-avatar">KL</div>
     </div>
   </header>
 
-  <!-- ══ PAGE: DASHBOARD ══════════════════════════════════════════════════ -->
+  <!-- ══ DASHBOARD ══════════════════════════════════════════════ -->
   <section id="page-dashboard" class="page active">
     <div class="kpi-row" id="kpiRow"></div>
-
     <div class="row-2">
       <div class="card">
         <div class="card-head">
-          <span class="card-title">Avg Daily Units Sold — Last 90 Days</span>
+          <span class="card-title">Daily Units Sold &amp; Ordered — Last 90 Days</span>
           <div class="legend-row">
-            <span class="leg-dot" style="background:#00d4ff"></span>Sold
-            <span class="leg-dot" style="background:#00ff88; margin-left:12px;"></span>Ordered
+            <div class="leg-dot" style="background:var(--neon)"></div> Sold
+            <div class="leg-dot" style="background:var(--ok); margin-left:10px"></div> Ordered
           </div>
         </div>
-        <div class="chart-wrap" style="height:220px">
-          <canvas id="trendChart" role="img" aria-label="Daily sold and ordered trend">Trend chart</canvas>
+        <div class="chart-wrap" style="height:230px">
+          <canvas id="trendChart" role="img" aria-label="Trend chart"></canvas>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-head"><span class="card-title">Inventory by Category</span></div>
-        <div class="chart-wrap" style="height:220px">
-          <canvas id="catChart" role="img" aria-label="Inventory status by category">Category chart</canvas>
+        <div class="card-head"><span class="card-title">Inventory Status by Category</span></div>
+        <div class="chart-wrap" style="height:230px">
+          <canvas id="catChart" role="img" aria-label="Category status chart"></canvas>
         </div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-head">
-        <span class="card-title">Critical Alerts — Action Required</span>
-        <span class="badge danger">Requires attention</span>
+        <span class="card-title">Action Required — Critical &amp; Reorder Alerts</span>
+        <span class="badge danger" id="alertCount"></span>
       </div>
       <div id="alertTable"></div>
     </div>
   </section>
 
-  <!-- ══ PAGE: INVENTORY ══════════════════════════════════════════════════ -->
+  <!-- ══ INVENTORY ══════════════════════════════════════════════ -->
   <section id="page-inventory" class="page">
     <div class="toolbar">
       <div class="search-wrap">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="searchInv" type="text" placeholder="Search product name or ID…" oninput="filterInventory()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInv" type="text" placeholder="Search by name or product ID…" oninput="filterInventory()">
       </div>
       <select id="filterCat" onchange="filterInventory()">
         <option value="">All categories</option>
@@ -141,21 +135,21 @@
       </select>
       <div class="toolbar-meta" id="invCount"></div>
     </div>
-    <div class="card" style="padding:0; overflow:hidden;">
+    <div class="card" style="padding:0;overflow:hidden;">
       <div id="invTableWrap"></div>
     </div>
   </section>
 
-  <!-- ══ PAGE: REPLENISHMENT ORDERS ═════════════════════════════════════ -->
+  <!-- ══ REPLENISHMENT ══════════════════════════════════════════ -->
   <section id="page-orders" class="page">
-    <div class="row-2" style="margin-bottom:20px;">
+    <div class="row-2" style="margin-bottom:20px">
       <div class="card">
         <div class="card-head"><span class="card-title">Safety Stock Formula</span></div>
         <div class="formula-block">
           <div class="formula">SS = Z × σ × √(L)</div>
           <div class="formula-legend">
-            <span><b>Z</b> = 1.645 (95% service level)</span>
-            <span><b>σ</b> = forecast error std dev</span>
+            <span><b>Z</b> = 1.645 &nbsp;(95% service level)</span>
+            <span><b>σ</b> = std dev of forecast error</span>
             <span><b>L</b> = 7 days lead time</span>
           </div>
         </div>
@@ -165,123 +159,122 @@
         <div class="formula-block">
           <div class="formula">ROP = μ × L + SS</div>
           <div class="formula-legend">
-            <span><b>μ</b> = avg daily demand (model pred.)</span>
+            <span><b>μ</b> = avg daily demand (ANN prediction)</span>
             <span><b>L</b> = 7 days lead time</span>
-            <span><b>SS</b> = safety stock from above</span>
+            <span><b>SS</b> = safety stock above</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="card" style="padding:0; overflow:hidden;">
-      <div class="card-head" style="padding:16px 20px; border-bottom:1px solid var(--border);">
-        <span class="card-title">Replenishment Queue — CRITICAL & REORDER SKUs</span>
-        <span class="badge warn" id="orderCount">—</span>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="card-head" style="padding:18px 24px;border-bottom:1px solid var(--border);">
+        <span class="card-title">Replenishment Queue — CRITICAL &amp; REORDER Items</span>
+        <span class="badge warn" id="orderCount"></span>
       </div>
       <div id="orderTableWrap"></div>
     </div>
   </section>
 
-  <!-- ══ PAGE: DEMAND FORECAST ════════════════════════════════════════════ -->
+  <!-- ══ FORECAST ═══════════════════════════════════════════════ -->
   <section id="page-forecast" class="page">
     <div class="row-3" id="forecastKPIs"></div>
-
-    <div class="card" style="margin-bottom:20px;">
+    <div class="card" style="margin-bottom:20px">
       <div class="card-head">
-        <span class="card-title">Demand Forecast — Dec 2023 History + 7-day Ahead (Jan 2024)</span>
+        <span class="card-title">Demand Forecast — Dec 2023 History + 7-Day Ahead (Jan 2024)</span>
         <div class="legend-row">
-          <span class="leg-dot" style="background:#00d4ff"></span>Historical actual
-          <span class="leg-dot" style="background:#ff6b35; margin-left:12px;"></span>Predicted
-          <span class="leg-dot" style="background:rgba(255,107,53,0.15); width:18px; height:10px; border-radius:2px; margin-left:12px;"></span>95% band
+          <div class="leg-dot" style="background:var(--neon)"></div> Historical actual
+          <div class="leg-dot" style="background:#ff6b35;margin-left:10px"></div> ANN Predicted
+          <div class="leg-dot" style="background:rgba(255,107,53,.2);width:18px;height:10px;border-radius:3px;margin-left:10px"></div> 95% CI
         </div>
       </div>
-      <div class="chart-wrap" style="height:280px">
-        <canvas id="forecastChart" role="img" aria-label="Forecast chart">Forecast</canvas>
+      <div class="chart-wrap" style="height:290px">
+        <canvas id="forecastChart" role="img" aria-label="Forecast chart"></canvas>
       </div>
     </div>
-
     <div class="card">
-      <div class="card-head"><span class="card-title">7-Day Forecast Table</span></div>
+      <div class="card-head"><span class="card-title">7-Day Forecast Detail</span></div>
       <div id="forecastTable"></div>
     </div>
   </section>
 
-  <!-- ══ PAGE: STORE PERFORMANCE ══════════════════════════════════════════ -->
+  <!-- ══ STORES ═════════════════════════════════════════════════ -->
   <section id="page-stores" class="page">
     <div class="row-3" id="storeKPIs"></div>
-
     <div class="row-2">
       <div class="card">
         <div class="card-head"><span class="card-title">Avg Sales by Store</span></div>
-        <div class="chart-wrap" style="height:260px">
-          <canvas id="storeChart" role="img" aria-label="Store performance chart">Store chart</canvas>
+        <div class="chart-wrap" style="height:270px">
+          <canvas id="storeChart" role="img" aria-label="Store chart"></canvas>
         </div>
       </div>
       <div class="card">
-        <div class="card-head"><span class="card-title">Category Performance</span></div>
-        <div class="chart-wrap" style="height:260px">
-          <canvas id="catPerfChart" role="img" aria-label="Category performance">Category performance</canvas>
+        <div class="card-head"><span class="card-title">Avg Sales by Category</span></div>
+        <div class="chart-wrap" style="height:270px">
+          <canvas id="catPerfChart" role="img" aria-label="Category performance"></canvas>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══ PAGE: ML PIPELINE ════════════════════════════════════════════════ -->
+  <!-- ══ ML PIPELINE ════════════════════════════════════════════ -->
   <section id="page-pipeline" class="page">
     <div class="pipeline-steps" id="pipelineSteps"></div>
-    <div id="pipelineDetail" class="pipeline-detail" style="display:none;"></div>
-
-    <div class="row-3" style="margin-top:24px;">
+    <div id="pipelineDetail" class="pipeline-detail" style="display:none"></div>
+    <div class="row-3">
       <div class="card">
         <div class="card-title-sm">RMSE</div>
         <div class="metric-val warn">87.6 <span>units/day</span></div>
+        <div class="metric-sub">Root mean squared error — test set</div>
       </div>
       <div class="card">
         <div class="card-title-sm">R²</div>
         <div class="metric-val ok">0.42</div>
-        <div class="metric-sub">leakage-free</div>
+        <div class="metric-sub">Leakage-free · genuine performance</div>
       </div>
       <div class="card">
         <div class="card-title-sm">MAPE</div>
         <div class="metric-val neon">18.3%</div>
-        <div class="metric-sub">actual &gt; 5 units</div>
+        <div class="metric-sub">Mean abs. % error · actual &gt; 5 units</div>
       </div>
     </div>
-
-    <div class="card" style="margin-top:0;">
-      <div class="card-head"><span class="card-title">Actual vs Predicted · Test Set Sample (Sep 2023)</span></div>
-      <div class="chart-wrap" style="height:240px">
-        <canvas id="predChart" role="img" aria-label="Actual vs predicted">Prediction chart</canvas>
+    <div class="card">
+      <div class="card-head">
+        <span class="card-title">Actual vs Predicted · Test Set (Sep 2023)</span>
+        <div class="legend-row">
+          <div class="leg-dot" style="background:var(--neon)"></div> Actual
+          <div class="leg-dot" style="background:#ff6b35;margin-left:10px"></div> Predicted
+        </div>
+      </div>
+      <div class="chart-wrap" style="height:250px">
+        <canvas id="predChart" role="img" aria-label="Prediction chart"></canvas>
       </div>
     </div>
   </section>
 
-  <!-- ══ PAGE: SHAP ════════════════════════════════════════════════════════ -->
+  <!-- ══ SHAP ═══════════════════════════════════════════════════ -->
   <section id="page-shap" class="page">
     <div class="shap-intro">
-      SHAP (SHapley Additive exPlanations) measures how much each feature <em>shifts</em> the model's prediction away from the baseline average demand. Positive SHAP = feature pushes prediction <em>higher</em>; negative = pushes <em>lower</em>.
+      <strong>SHAP (SHapley Additive exPlanations)</strong> measures how much each feature <em>shifts</em> the ANN's prediction away from the average baseline demand of 136.5 units/day. Click any row below to read a detailed interpretation.
     </div>
-
-    <div class="row-2" style="align-items:start;">
+    <div class="row-2" style="align-items:start">
       <div class="card">
-        <div class="card-head"><span class="card-title">Feature Importance Ranking</span></div>
-        <div id="shapBars" style="margin-top:8px;"></div>
+        <div class="card-head"><span class="card-title">Feature Importance — Mean |SHAP|</span></div>
+        <div id="shapBars" style="margin-top:4px"></div>
       </div>
       <div class="card">
-        <div class="card-head"><span class="card-title">SHAP × Feature Value Scatter</span></div>
-        <div class="chart-wrap" style="height:300px">
-          <canvas id="shapScatter" role="img" aria-label="SHAP scatter plot">SHAP scatter</canvas>
+        <div class="card-head"><span class="card-title">SHAP × Feature Value (Beeswarm)</span></div>
+        <div class="chart-wrap" style="height:310px">
+          <canvas id="shapScatter" role="img" aria-label="SHAP scatter"></canvas>
         </div>
         <div class="shap-legend">
-          <span style="color:#0088ff">●</span> Low feature value
-          &nbsp;→&nbsp;
-          <span style="color:#00d4ff">●</span> High feature value
+          <span style="color:var(--blue)">●</span> Low feature value &nbsp;→&nbsp;
+          <span style="color:var(--neon)">●</span> High feature value
         </div>
       </div>
     </div>
-
-    <div class="card" id="shapDetail">
-      <div class="card-head"><span class="card-title">Feature Detail</span></div>
-      <div id="shapDetailBody">Click any feature bar above to see interpretation.</div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">Feature Interpretation</span></div>
+      <div id="shapDetailBody">← Click any feature row above to read the interpretation.</div>
     </div>
   </section>
 
