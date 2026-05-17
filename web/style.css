@@ -341,13 +341,33 @@ select option { background: #0e1d2c; }
 .alert-meta { font-size: 12px; color: var(--t2); font-family: var(--mono); margin-top: 2px; }
 .alert-action {
   font-size: 11.5px; font-family: var(--mono); font-weight: 700;
-  padding: 7px 14px; border-radius: var(--r-sm); border: 1px solid;
-  cursor: pointer; background: transparent; white-space: nowrap; transition: background .15s;
+  padding: 7px 16px; border-radius: var(--r-sm); border: 1.5px solid;
+  cursor: pointer;
+  background: transparent !important;   /* force override browser default */
+  -webkit-appearance: none;             /* strip OS button chrome (Safari) */
+  appearance: none;
+  white-space: nowrap;
+  transition: background .15s, box-shadow .15s;
+  line-height: 1;
 }
-.alert-action.danger { color: var(--danger); border-color: rgba(255,61,85,.35); }
-.alert-action.danger:hover { background: var(--danger-dim); }
-.alert-action.warn   { color: var(--warn);   border-color: rgba(255,170,0,.35); }
-.alert-action.warn:hover   { background: var(--warn-dim); }
+.alert-action.danger {
+  color: var(--danger);
+  border-color: rgba(255,61,85,.5);
+  text-shadow: 0 0 8px rgba(255,61,85,.4);
+}
+.alert-action.danger:hover {
+  background: rgba(255,61,85,.15) !important;
+  box-shadow: 0 0 12px rgba(255,61,85,.2);
+}
+.alert-action.warn {
+  color: var(--warn);
+  border-color: rgba(255,170,0,.5);
+  text-shadow: 0 0 8px rgba(255,170,0,.3);
+}
+.alert-action.warn:hover {
+  background: rgba(255,170,0,.12) !important;
+  box-shadow: 0 0 12px rgba(255,170,0,.2);
+}
 
 /* ── Misc ────────────────────────────────────────────────────── */
 em { color: var(--neon); font-style: normal; }
