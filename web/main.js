@@ -33,7 +33,7 @@ const PIPELINE_STEPS = [
 Chart.defaults.color           = 'rgba(180,210,240,0.55)';
 Chart.defaults.borderColor     = 'rgba(0,212,255,0.1)';
 Chart.defaults.font.family     = "'Inter', sans-serif";
-Chart.defaults.font.size       = 11;
+Chart.defaults.font.size       = 12;
 
 const NEON   = '#00d4ff';
 const NEON2  = '#0088ff';
@@ -96,22 +96,22 @@ function buildDashboard() {
 
   // KPI cards
   document.getElementById('kpiRow').innerHTML = `
-    <div class="kpi-card">
+    <div class="kpi-card c-neon">
       <div class="kpi-label">Total SKUs</div>
       <div class="kpi-val neon">100</div>
       <div class="kpi-sub">5 stores · 8 categories</div>
     </div>
-    <div class="kpi-card">
+    <div class="kpi-card c-danger">
       <div class="kpi-label">Critical Stock</div>
       <div class="kpi-val danger">${critical}</div>
       <div class="kpi-sub">inventory &lt; 150 units</div>
     </div>
-    <div class="kpi-card">
+    <div class="kpi-card c-warn">
       <div class="kpi-label">Need Reorder</div>
       <div class="kpi-val warn">${reorder}</div>
       <div class="kpi-sub">inventory 150–250 units</div>
     </div>
-    <div class="kpi-card">
+    <div class="kpi-card c-ok">
       <div class="kpi-label">Healthy Stock</div>
       <div class="kpi-val ok">${ok}</div>
       <div class="kpi-sub">inventory &gt; 250 units</div>
@@ -153,6 +153,7 @@ function buildDashboard() {
 
   // Alert list
   const alerts = PRODUCTS.filter(p => p.status !== 'OK').sort((a,b) => a.inv - b.inv).slice(0,8);
+  document.getElementById('alertCount').textContent = alerts.length + ' items';
   document.getElementById('alertTable').innerHTML = alerts.map(p => `
     <div class="alert-item">
       <div class="alert-icon ${p.status.toLowerCase()}">${p.status==='CRITICAL'?'⚠':'↓'}</div>
